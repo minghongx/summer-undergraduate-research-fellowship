@@ -7,3 +7,6 @@
 [submodule "pinocchio"]
 	path = pinocchio
 	url = https://github.com/leggedrobotics/pinocchio.git
+[submodule "unitree_ros"]
+	path = unitree_ros
+	url = https://github.com/unitreerobotics/unitree_ros.git
