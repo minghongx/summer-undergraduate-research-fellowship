@@ -62,4 +62,10 @@ RUN git clone https://github.com/raisimTech/raisimLib.git --branch v1.1.01 --dep
 WORKDIR /catkin_ws/src
 RUN catkin init --workspace .. \
     && catkin config --extend /opt/ros/noetic \
-    && catkin config -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    && catkin config -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    && catkin config -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+# Development dependencies
+RUN apt-get update && apt-get install --yes --no-install-recommends \
+        ros-noetic-joint-state-publisher \
+    && rm -rf /var/lib/apt/lists/*
