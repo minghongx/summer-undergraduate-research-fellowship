@@ -69,3 +69,12 @@ RUN catkin init --workspace .. \
 RUN apt-get update && apt-get install --yes --no-install-recommends \
         ros-noetic-joint-state-publisher \
     && rm -rf /var/lib/apt/lists/*
+
+# Development utils
+RUN apt-get update && apt-get install --yes --no-install-recommends \
+        ripgrep \
+        fd-find \
+        htop \
+        # Enable tab-completion
+        ros-noetic-rosbash \
+    && rm -rf /var/lib/apt/lists/*
