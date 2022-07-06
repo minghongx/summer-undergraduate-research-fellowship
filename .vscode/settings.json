@@ -1,0 +1,12 @@
+{
+    "clangd.arguments": [
+        "--compile-commands-dir=/catkin_ws",
+        // "--clang-tidy",
+    ],
+    // "clangd.fallbackFlags": [
+    //     "--include-directory=/catkin_ws/devel/include",
+    //     "--include-directory=/opt/ros/noetic/include",
+    //     "--include-directory=/usr/include",
+    //     "--include-directory=/usr/include/eigen3",
+    // ],
+}
