@@ -87,12 +87,8 @@ LeggedRobotInterface::LeggedRobotInterface(const std::string& taskFile, const st
     throw std::invalid_argument("[LeggedRobotInterface] targetCommand file not found: " + referenceFilePath.string());
   }
 
-  std::cerr << "[LeggedRobotInterface] AAAA " << referenceFilePath << std::endl;
-
   bool verbose;
   loadData::loadCppDataType(taskFile, "legged_robot_interface.verbose", verbose);
-
-  std::cerr << "[LeggedRobotInterface] BBBB " << referenceFilePath << std::endl;
 
   // load setting from loading file
   modelSettings_ = loadModelSettings(taskFile, "model_settings", verbose);
@@ -101,18 +97,12 @@ LeggedRobotInterface::LeggedRobotInterface(const std::string& taskFile, const st
   rolloutSettings_ = rollout::loadSettings(taskFile, "rollout", verbose);
   sqpSettings_ = multiple_shooting::loadSettings(taskFile, "multiple_shooting", verbose);
 
-  std::cerr << "[LeggedRobotInterface] CCCC " << referenceFilePath << std::endl;
-
   // OptimalConrolProblem
   setupOptimalConrolProblem(taskFile, urdfFile, referenceFile, verbose);
-
-  std::cerr << "[LeggedRobotInterface] DDDD " << referenceFilePath << std::endl;
 
   // initial state
   initialState_.setZero(centroidalModelInfo_.stateDim);
   loadData::loadEigenMatrix(taskFile, "initialState", initialState_);
-
-  std::cerr << "[LeggedRobotInterface] EEEE " << referenceFilePath << std::endl;
 }
 
 /******************************************************************************************************/
@@ -123,15 +113,11 @@ void LeggedRobotInterface::setupOptimalConrolProblem(const std::string& taskFile
   // PinocchioInterface
   pinocchioInterfacePtr_.reset(new PinocchioInterface(centroidal_model::createPinocchioInterface(urdfFile, modelSettings_.jointNames)));
 
-  std::cerr << pinocchioInterfacePtr_->getModel().nq << std::endl;
-
   // CentroidalModelInfo
   centroidalModelInfo_ = centroidal_model::createCentroidalModelInfo(
       *pinocchioInterfacePtr_, centroidal_model::loadCentroidalType(taskFile),
       centroidal_model::loadDefaultJointState(pinocchioInterfacePtr_->getModel().nq - 6, referenceFile), modelSettings_.contactNames3DoF,
       modelSettings_.contactNames6DoF);
-
-  std::cerr << "[LeggedRobotInterface::setupOptimalConrolProblem] BBBBBBBB " << std::endl;
 
   // Swing trajectory planner
   std::unique_ptr<SwingTrajectoryPlanner> swingTrajectoryPlanner(
@@ -187,8 +173,6 @@ void LeggedRobotInterface::setupOptimalConrolProblem(const std::string& taskFile
                                                                     velocityUpdateCallback, footName, modelSettings_.modelFolderCppAd,
                                                                     modelSettings_.recompileLibrariesCppAd, modelSettings_.verboseCppAd));
     }
-
-    std::cerr << "[LeggedRobotInterface::setupOptimalConrolProblem] CCCCCCCC " << std::endl;
 
     problemPtr_->softConstraintPtr->add(footName + "_frictionCone",
                                         getFrictionConeConstraint(i, frictionCoefficient, barrierPenaltyConfig));
