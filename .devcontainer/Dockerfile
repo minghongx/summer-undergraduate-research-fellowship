@@ -77,4 +77,6 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         htop \
         # Enable tab-completion
         ros-noetic-rosbash \
+        # check_urdf
+        liburdfdom-tools \
     && rm -rf /var/lib/apt/lists/*

@@ -41,7 +41,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <ocs2_robotic_tools/end_effector/EndEffectorKinematics.h>
 #include <ocs2_sqp/MultipleShootingSettings.h>
 
-#include "ocs2_legged_robot/common/ModelSettings.h"
+// #include "ocs2_legged_robot/common/ModelSettings.h"
+#include <go1/ModelSettings.h>
 #include "ocs2_legged_robot/initialization/LeggedRobotInitializer.h"
 #include "ocs2_legged_robot/reference_manager/SwitchedModelReferenceManager.h"
 

@@ -1,20 +1,32 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(go1)
 
-find_package(catkin REQUIRED)
+set(CATKIN_PACKAGE_DEPENDENCIES
+  ocs2_core
+)
+
+find_package(catkin REQUIRED COMPONENTS
+  ${CATKIN_PACKAGE_DEPENDENCIES}
+)
 find_package(pinocchio REQUIRED)
 
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES go1
-#  CATKIN_DEPENDS other_catkin_pkg
-#  DEPENDS system_lib
+  INCLUDE_DIRS include
+#   LIBRARIES go1
+  CATKIN_DEPENDS
+    ${CATKIN_PACKAGE_DEPENDENCIES}
+  DEPENDS 
+    pinocchio
 )
 
 include_directories(
-# include
-# ${catkin_INCLUDE_DIRS}
+  include
+  ${pinocchio_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
 )
+
+install(DIRECTORY include/${PROJECT_NAME}/
+        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
 
 set(PINOCCHIO_MODEL_DIR "${PROJECT_SOURCE_DIR}/models")
 add_definitions('-DPINOCCHIO_MODEL_DIR=\"${PINOCCHIO_MODEL_DIR}\"')

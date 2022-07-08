@@ -12,3 +12,10 @@ catkin config --cmake-args='-DCMAKE_EXPORT_COMPILE_COMMANDS=ON'
 This copies the compile_commands.json of the build dir to workspace folder, which in my case happens to be where clangd is looking for the compile_commands.json file.
 
 boost::property_tree::read_info(filename, pt);
+
+http://wiki.ros.org/urdf#Verification
+apt install liburdfdom-tools
+check_urdf unitree_ros/robots/go1_description/urdf/go1.urdf
+
+https://answers.ros.org/question/123221/where-should-generated-header-files-be-generated-to-how-can-i-then-export-them-with-catkin/?answer=123371#post-id-123371
+http://docs.ros.org/en/lunar/api/catkin/html/howto/format2/building_libraries.html#exporting

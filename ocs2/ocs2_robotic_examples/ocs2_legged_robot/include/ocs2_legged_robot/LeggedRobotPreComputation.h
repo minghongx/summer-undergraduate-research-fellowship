@@ -37,7 +37,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <ocs2_centroidal_model/CentroidalModelPinocchioMapping.h>
 
-#include "ocs2_legged_robot/common/ModelSettings.h"
+// #include "ocs2_legged_robot/common/ModelSettings.h"
+#include <go1/ModelSettings.h>
 #include "ocs2_legged_robot/constraint/EndEffectorLinearConstraint.h"
 #include "ocs2_legged_robot/foot_planner/SwingTrajectoryPlanner.h"
 

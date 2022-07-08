@@ -14,6 +14,7 @@ set(CATKIN_PACKAGE_DEPENDENCIES
   ocs2_pinocchio_interface
   ocs2_centroidal_model
   ocs2_robotic_assets
+  go1
 )
 
 find_package(catkin REQUIRED COMPONENTS

@@ -34,7 +34,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <ocs2_centroidal_model/PinocchioCentroidalDynamicsAD.h>
 #include <ocs2_pinocchio_interface/PinocchioInterface.h>
 
-#include "ocs2_legged_robot/common/ModelSettings.h"
+// #include "ocs2_legged_robot/common/ModelSettings.h"
+#include <go1/ModelSettings.h>
 
 namespace ocs2 {
 namespace legged_robot {
