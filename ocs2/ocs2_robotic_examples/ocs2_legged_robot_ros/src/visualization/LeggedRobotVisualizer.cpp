@@ -84,8 +84,10 @@ void LeggedRobotVisualizer::launchVisualizerNode(ros::NodeHandle& nodeHandle) {
 
   // Load URDF model
   urdf::Model urdfModel;
-  if (!urdfModel.initParam("legged_robot_description")) {
-    std::cerr << "[LeggedRobotVisualizer] Could not read URDF from: \"legged_robot_description\"" << std::endl;
+  // if (!urdfModel.initParam("legged_robot_description")) {
+  //   std::cerr << "[LeggedRobotVisualizer] Could not read URDF from: \"legged_robot_description\"" << std::endl;
+  if (!urdfModel.initParam("robot_description")) {
+    std::cerr << "[LeggedRobotVisualizer] Could not read URDF from: \"robot_description\"" << std::endl;
   } else {
     KDL::Tree kdlTree;
     kdl_parser::treeFromUrdfModel(urdfModel, kdlTree);
@@ -140,10 +142,10 @@ void LeggedRobotVisualizer::publishObservation(ros::Time timeStamp, const System
 /******************************************************************************************************/
 void LeggedRobotVisualizer::publishJointTransforms(ros::Time timeStamp, const vector_t& jointAngles) const {
   if (robotStatePublisherPtr_ != nullptr) {
-    std::map<std::string, scalar_t> jointPositions{{"LF_HAA", jointAngles[0]}, {"LF_HFE", jointAngles[1]},  {"LF_KFE", jointAngles[2]},
-                                                   {"LH_HAA", jointAngles[3]}, {"LH_HFE", jointAngles[4]},  {"LH_KFE", jointAngles[5]},
-                                                   {"RF_HAA", jointAngles[6]}, {"RF_HFE", jointAngles[7]},  {"RF_KFE", jointAngles[8]},
-                                                   {"RH_HAA", jointAngles[9]}, {"RH_HFE", jointAngles[10]}, {"RH_KFE", jointAngles[11]}};
+    std::map<std::string, scalar_t> jointPositions{{"FL_hip_joint", jointAngles[0]}, {"FL_thigh_joint", jointAngles[1]},  {"FL_calf_joint", jointAngles[2]},
+                                                   {"RL_hip_joint", jointAngles[3]}, {"RL_thigh_joint", jointAngles[4]},  {"RL_calf_joint", jointAngles[5]},
+                                                   {"FR_hip_joint", jointAngles[6]}, {"FR_thigh_joint", jointAngles[7]},  {"FR_calf_joint", jointAngles[8]},
+                                                   {"RR_hip_joint", jointAngles[9]}, {"RR_thigh_joint", jointAngles[10]}, {"RR_calf_joint", jointAngles[11]}};
     robotStatePublisherPtr_->publishTransforms(jointPositions, timeStamp);
   }
 }

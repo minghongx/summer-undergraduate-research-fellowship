@@ -19,3 +19,12 @@ check_urdf unitree_ros/robots/go1_description/urdf/go1.urdf
 
 https://answers.ros.org/question/123221/where-should-generated-header-files-be-generated-to-how-can-i-then-export-them-with-catkin/?answer=123371#post-id-123371
 http://docs.ros.org/en/lunar/api/catkin/html/howto/format2/building_libraries.html#exporting
+
+ctrl shift O
+
+catkin build -j4 ocs2 go1_description go1 && jq -s 'map(.[])' /catkin_ws/build/**/compile_commands.json > /catkin_ws/compile_commands.json
+
+rosrun go1 load_urdf
+check_urdf unitree_ros/robots/go1_description/urdf/go1.urdf
+
+rosrun --prefix 'gdb --args' go1 load_urdf

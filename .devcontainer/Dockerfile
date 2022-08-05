@@ -1,5 +1,15 @@
 FROM ubuntu:focal
 
+# https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
+# Workaround: https://hub.docker.com/_/debian/
+RUN apt-get update && apt-get install --yes locales && rm -rf /var/lib/apt/lists/* \
+	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ENV LANG en_US.utf8
+
+# Workaround: https://askubuntu.com/questions/432604/couldnt-connect-to-accessibility-bus
+ENV NO_AT_BRIDGE=1
+
+# Install dependencies of OCS2
 RUN apt-get update && apt-get install --yes --no-install-recommends \
         gnupg \
         wget \
@@ -23,7 +33,11 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         git \
         # Make the installation of raisimLib easy to find for catkin and easy to uninstall in the future
         checkinstall \
-        # Dependencies of OCS2
+        # Official examples launch several terminal emulators to form a dashboard
+        gnome-terminal \
+        dbus-x11 \
+        libcanberra-gtk-module libcanberra-gtk3-module \
+        # Misc
         ros-noetic-common-msgs \
         ros-noetic-interactive-markers \
         ros-noetic-tf \
@@ -32,38 +46,28 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         ros-noetic-robot-state-publisher \
         ros-noetic-rviz \
         ros-noetic-grid-map-rviz-plugin \
-        # Official examples use GUI
-        gnome-terminal \
-        dbus-x11 \
-        libcanberra-gtk-module libcanberra-gtk3-module \
-        # Optional dependencies
+        # Optional
         ros-noetic-rqt-multiplot \
         ros-noetic-grid-map-msgs \
-    && rm -rf /var/lib/apt/lists/*
-
-# https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
-# Workaround: https://hub.docker.com/_/debian/
-RUN apt-get update && apt-get install --yes locales && rm -rf /var/lib/apt/lists/* \
-	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-ENV LANG en_US.utf8
-
-# Workaround: https://askubuntu.com/questions/432604/couldnt-connect-to-accessibility-bus
-ENV NO_AT_BRIDGE=1
-
-# Install raisimLib
-WORKDIR /tmp/install
-RUN git clone https://github.com/raisimTech/raisimLib.git --branch v1.1.01 --depth 1 \
-    && cd raisimLib && mkdir build && cd build \
+    # RaiSim
+    && git clone https://github.com/raisimTech/raisimLib.git --branch v1.1.01 --depth 1 /tmp/install/raisimLib \
+    && cd /tmp/install/raisimLib && mkdir build && cd build \
     && cmake .. -DRAISIM_EXAMPLE=ON -DRAISIM_PY=ON -DPYTHON_EXECUTABLE=$(python3 -c "import sys; print(sys.executable)") \
     && make -j4 && checkinstall \
-    && rm -rf /tmp/* /var/tmp/*
+    # Prune
+    && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
-# Config catkin workspace
-WORKDIR /catkin_ws/src
-RUN catkin init --workspace .. \
-    && catkin config --extend /opt/ros/noetic \
-    && catkin config -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    && catkin config -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+WORKDIR /tmp/install
+# Compile and install GDB
+RUN apt-get update && apt-get install --yes --no-install-recommends \
+        libncurses-dev \
+        python3-pip \
+    && wget "http://ftp.gnu.org/gnu/gdb/gdb-12.1.tar.gz" && tar -xvzf gdb-12.1.tar.gz && cd gdb-12.1 \
+    && ./configure --enable-tui --with-python=$(which python3) \
+    && make && make install \
+    # cyrus-and/gdb-dashboard
+    && wget -P ~ https://git.io/.gdbinit && pip install pygments \
+    && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
 # Development dependencies
 RUN apt-get update && apt-get install --yes --no-install-recommends \
@@ -79,4 +83,21 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         ros-noetic-rosbash \
         # check_urdf
         liburdfdom-tools \
+        # https://github.com/catkin/catkin_tools/issues/551#issuecomment-732989966
+        jq \
     && rm -rf /var/lib/apt/lists/*
+
+# Config catkin workspace
+WORKDIR /catkin_ws/src
+RUN catkin init --workspace .. \
+    && catkin config --extend /opt/ros/noetic \
+    && catkin config --cmake-args \
+        # Release builds with debugging symbols
+        # -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+        # Debug builds with debugging symbols
+        -DCMAKE_BUILD_TYPE=Debug \
+        # Export compile_commands.json
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+# Config shell
+RUN echo "[ -f /catkin_ws/devel/setup.bash ] && source /catkin_ws/devel/setup.bash" >> ~/.bashrc

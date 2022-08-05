@@ -14,6 +14,22 @@
 	},
 
 	// Uncomment when using a ptrace-based debugger like C++, Go, and Rust
-	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ]
+	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			"extensions": [
+				"twxs.cmake",
+				"llvm-vs-code-extensions.vscode-clangd"
+			],
+			"settings": {
+				"clangd.arguments": [
+					// jq -s 'map(.[])' /catkin_ws/build/**/compile_commands.json > /catkin_ws/compile_commands.json
+					"--compile-commands-dir=/catkin_ws"
+				]
+			}
+		}
+	}
 
 }

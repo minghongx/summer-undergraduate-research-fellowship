@@ -14,15 +14,6 @@
     <!-- The file defining gait definition -->
     <arg name="gaitCommandFile"   default="$(find ocs2_legged_robot)/config/command/gait.info"/>
 
-    <!-- send fake joint values -->
-    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
-        <param name="use_gui" value="TRUE"/>
-    </node>
-
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-        <param name="publish_frequency" type="double" value="1000.0"/>
-    </node>
-
     <!-- rviz -->
     <group if="$(arg rviz)">
       <param name="$(arg description_name)" textfile="$(arg urdfFile)"/>
@@ -36,11 +27,11 @@
     <param name="urdfFile"          value="$(arg urdfFile)" />
     <param name="gaitCommandFile"   value="$(arg gaitCommandFile)"/>
 
-    <node pkg="ocs2_legged_robot_ros" type="legged_robot_ddp_mpc" name="legged_robot_ddp_mpc"
+    <node pkg="ocs2_legged_robot_ros" type="legged_robot_sqp_mpc" name="legged_robot_sqp_mpc"
           output="screen" launch-prefix=""/>
 
     <node pkg="ocs2_legged_robot_ros" type="legged_robot_dummy" name="legged_robot_dummy"
-          output="screen" launch-prefix="gnome-terminal --"/>
+          output="screen" launch-prefix="gnome-terminal -- gdb --args"/>
 
     <node pkg="ocs2_legged_robot_ros" type="legged_robot_target" name="legged_robot_target"
           output="screen" launch-prefix="gnome-terminal --"/>
