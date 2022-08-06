@@ -142,6 +142,11 @@ void LeggedRobotVisualizer::publishObservation(ros::Time timeStamp, const System
 /******************************************************************************************************/
 void LeggedRobotVisualizer::publishJointTransforms(ros::Time timeStamp, const vector_t& jointAngles) const {
   if (robotStatePublisherPtr_ != nullptr) {
+
+    for (std::size_t i = 0; i <= 11; ++i) {
+      ROS_INFO("jointAngles[%lu]: [%f]", i, jointAngles[i]);
+    }
+    
     std::map<std::string, scalar_t> jointPositions{{"FL_hip_joint", jointAngles[0]}, {"FL_thigh_joint", jointAngles[1]},  {"FL_calf_joint", jointAngles[2]},
                                                    {"RL_hip_joint", jointAngles[3]}, {"RL_thigh_joint", jointAngles[4]},  {"RL_calf_joint", jointAngles[5]},
                                                    {"FR_hip_joint", jointAngles[6]}, {"FR_thigh_joint", jointAngles[7]},  {"FR_calf_joint", jointAngles[8]},
