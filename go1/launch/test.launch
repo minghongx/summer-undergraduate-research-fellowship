@@ -31,7 +31,7 @@
           output="screen" launch-prefix=""/>
 
     <node pkg="ocs2_legged_robot_ros" type="legged_robot_dummy" name="legged_robot_dummy"
-          output="screen" launch-prefix="gnome-terminal -- gdb --args"/>
+          output="screen" launch-prefix="gnome-terminal --"/>
 
     <node pkg="ocs2_legged_robot_ros" type="legged_robot_target" name="legged_robot_target"
           output="screen" launch-prefix="gnome-terminal --"/>
