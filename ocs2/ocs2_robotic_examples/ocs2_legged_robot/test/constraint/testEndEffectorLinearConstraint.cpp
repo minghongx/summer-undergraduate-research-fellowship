@@ -77,7 +77,7 @@ class testEndEffectorLinearConstraint : public ::testing::Test {
 
     x(6) = 0.0;   // p_base_x
     x(7) = 0.0;   // p_base_y
-    x(8) = 0.57;  // p_base_z
+    x(8) = 0.375;  // p_base_z
     x(9) = 0.0;   // theta_base_z
     x(10) = 0.0;  // theta_base_y
     x(11) = 0.0;  // theta_base_x

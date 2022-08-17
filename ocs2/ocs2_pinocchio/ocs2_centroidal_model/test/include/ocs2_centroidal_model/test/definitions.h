@@ -61,7 +61,7 @@ inline ocs2::vector_t getInitialState() {
   // Base Pose: [position, orientation]
   x0(6) = 0.0;   // p_base_x
   x0(7) = 0.0;   // p_base_y
-  x0(8) = 0.53;  // p_base_z
+  x0(8) = 0.375;  // p_base_z
   x0(9) = 0.0;   // theta_base_z
   x0(10) = 0.0;  // theta_base_y
   x0(11) = 0.0;  // theta_base_x
