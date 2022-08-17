@@ -32,15 +32,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ocs2_legged_robot/test/AnymalFactoryFunctions.h"
 
 #include <ocs2_centroidal_model/FactoryFunctions.h>
-#include <ocs2_robotic_assets/package_path.h>
 
-#include "ocs2_legged_robot/common/ModelSettings.h"
+#include "go1/ModelSettings.h"
 #include "ocs2_legged_robot/package_path.h"
 
 namespace {
-const std::string URDF_FILE = ocs2::robotic_assets::getPath() + "/resources/anymal_c/urdf/anymal.urdf";
+const std::string URDF_FILE = "/catkin_ws/src/unitree_ros/robots/go1_description/urdf/go1.urdf";
 const std::string TASK_FILE = ocs2::legged_robot::getPath() + "/config/mpc/" + "task.info";
-const std::string REFERENCE_FILE = ocs2::legged_robot::getPath() + "/config/command/" + "reference.info";
+const std::string REFERENCE_FILE = "/catkin_ws/src/go1/config/reference.info";
 }  // unnamed namespace
 
 namespace ocs2 {

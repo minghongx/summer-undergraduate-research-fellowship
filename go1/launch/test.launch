@@ -27,6 +27,12 @@
     <param name="urdfFile"          value="$(arg urdfFile)" />
     <param name="gaitCommandFile"   value="$(arg gaitCommandFile)"/>
 
+    <!-- <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="1000.0"/>
+    </node>
+    
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/> -->
+
     <node pkg="ocs2_legged_robot_ros" type="legged_robot_sqp_mpc" name="legged_robot_sqp_mpc"
           output="screen" launch-prefix=""/>
 

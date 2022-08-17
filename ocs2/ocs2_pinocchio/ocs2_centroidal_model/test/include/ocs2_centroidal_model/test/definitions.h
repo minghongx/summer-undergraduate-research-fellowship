@@ -67,18 +67,19 @@ inline ocs2::vector_t getInitialState() {
   x0(11) = 0.0;  // theta_base_x
 
   // Leg Joint Positions: [LF, LH, RF, RH]
-  x0(12) = -0.10;  // LF_HAA
-  x0(13) = 0.7;    // LF_HFE
-  x0(14) = -1.0;   // LF_KFE
-  x0(15) = -0.10;  // LH_HAA
-  x0(16) = -0.7;   // LH_HFE
-  x0(17) = 1.0;    // LH_KFE
-  x0(18) = 0.10;   // RF_HAA
-  x0(19) = 0.7;    // RF_HFE
-  x0(20) = -1.0;   // RF_KFE
-  x0(21) = 0.10;   // RH_HAA
-  x0(22) = -0.7;   // RH_HFE
-  x0(23) = 1.0;    // RH_KFE
+
+  x0(12) =  0.1;   // LF_HAA
+  x0(13) =  0.6;   // LF_HFE
+  x0(14) = -1.2;   // LF_KFE
+  x0(15) = -0.1;   // LH_HAA
+  x0(16) =  0.6;   // LH_HFE
+  x0(17) = -1.2;   // LH_KFE
+  x0(18) =  0.1;   // RF_HAA
+  x0(19) =  0.6;   // RF_HFE
+  x0(20) = -1.2;   // RF_KFE
+  x0(21) = -0.1;   // RH_HAA
+  x0(22) =  0.6;   // RH_HFE
+  x0(23) = -1.2;   // RH_KFE
 
   return x0;
 }
