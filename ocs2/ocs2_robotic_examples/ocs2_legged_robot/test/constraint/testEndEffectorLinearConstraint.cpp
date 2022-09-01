@@ -82,16 +82,16 @@ class testEndEffectorLinearConstraint : public ::testing::Test {
     x(10) = 0.0;  // theta_base_y
     x(11) = 0.0;  // theta_base_x
 
-    x(12) = 0.1;  // LF_HAA
+    x(12) = 0.0;  // LF_HAA
     x(13) = 0.6;  // LF_HFE
     x(14) = -1.2; // LF_KFE
-    x(15) = -0.1; // LH_HAA
+    x(15) = 0.0; // LH_HAA
     x(16) = 0.6;  // LH_HFE
     x(17) = -1.2; // LH_KFE
-    x(18) = 0.1;  // RF_HAA
+    x(18) = 0.0;  // RF_HAA
     x(19) = 0.6;  // RF_HFE
     x(20) = -1.2; // RF_KFE
-    x(21) = -0.1; // RH_HAA
+    x(21) = 0.0; // RH_HAA
     x(22) = 0.6;  // RH_HFE
     x(23) = -1.2; // RH_KFE
 

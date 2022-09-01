@@ -147,10 +147,14 @@ void LeggedRobotVisualizer::publishJointTransforms(ros::Time timeStamp, const ve
       ROS_INFO("jointAngles[%lu]: [%f]", i, jointAngles[i]);
     }
     
-    std::map<std::string, scalar_t> jointPositions{{"FL_hip_joint", -jointAngles[0]}, {"FL_thigh_joint", jointAngles[1]},  {"FL_calf_joint", jointAngles[2]},
+    // std::map<std::string, scalar_t> jointPositions{{"FL_hip_joint", jointAngles[0]}, {"FL_thigh_joint", jointAngles[1]},  {"FL_calf_joint", jointAngles[2]},
+    //                                                {"RL_hip_joint", jointAngles[3]}, {"RL_thigh_joint", jointAngles[4]},  {"RL_calf_joint", jointAngles[5]},
+    //                                                {"FR_hip_joint", jointAngles[6]}, {"FR_thigh_joint", jointAngles[7]},  {"FR_calf_joint", jointAngles[8]},
+    //                                                {"RR_hip_joint", jointAngles[9]}, {"RR_thigh_joint", jointAngles[10]}, {"RR_calf_joint", jointAngles[11]}};
+    std::map<std::string, scalar_t> jointPositions{{"FL_hip_joint", jointAngles[9]}, {"FL_thigh_joint", jointAngles[10]},  {"FL_calf_joint", jointAngles[11]},
                                                    {"RL_hip_joint", jointAngles[3]}, {"RL_thigh_joint", jointAngles[4]},  {"RL_calf_joint", jointAngles[5]},
                                                    {"FR_hip_joint", jointAngles[6]}, {"FR_thigh_joint", jointAngles[7]},  {"FR_calf_joint", jointAngles[8]},
-                                                   {"RR_hip_joint", -jointAngles[9]}, {"RR_thigh_joint", jointAngles[10]}, {"RR_calf_joint", jointAngles[11]}};
+                                                   {"RR_hip_joint", jointAngles[0]}, {"RR_thigh_joint", jointAngles[1]}, {"RR_calf_joint", jointAngles[2]}};
     robotStatePublisherPtr_->publishTransforms(jointPositions, timeStamp);
   }
 }
