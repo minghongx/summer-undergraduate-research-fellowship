@@ -3,7 +3,8 @@
 	
 	"build": {
 		"dockerfile": "./Dockerfile",
-		"context": ".."
+		"context": "..",
+		"target": "devel"
 	},
 
 	"workspaceMount": "source=${localWorkspaceFolder},target=/catkin_ws/src,type=bind",

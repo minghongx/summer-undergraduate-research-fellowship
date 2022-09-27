@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>quadrupedalism</name>
+  <version>0.0.0</version>
+  <description>Control quadrupedal robots with OCS2 toolbox.</description>
+
+  <maintainer email="sgmxu9@liverpool.ac.uk">Minghong Xu</maintainer>
+  <author email="sgmxu9@liverpool.ac.uk">Minghong Xu</author>
+
+  <license>TODO</license>
+
+  <url type="repository">https://github.com/MinghongAlexXu/SURF-2022</url>
+  <url type="bugtracker">https://github.com/MinghongAlexXu/SURF-2022/issues</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- <run_depend>package</run_depend> -->
+
+  <export>
+    <metapackage/>
+  </export>
+</package>

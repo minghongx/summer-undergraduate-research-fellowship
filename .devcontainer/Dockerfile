@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:focal AS base
 
 # https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
 # Workaround: https://hub.docker.com/_/debian/
@@ -57,24 +57,36 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
     # Prune
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
-WORKDIR /tmp/install
+# Create and config workspace
+WORKDIR /catkin_ws/src
+RUN catkin init --workspace .. \
+    && catkin config --extend /opt/ros/noetic \
+    && catkin config --cmake-args \
+        # Release builds with debugging symbols
+        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+RUN echo "[ -f /catkin_ws/devel/setup.bash ] && source /catkin_ws/devel/setup.bash" >> ~/.bashrc
+
+
+FROM base AS devel
+
 # Compile and install GDB
 RUN apt-get update && apt-get install --yes --no-install-recommends \
         libncurses-dev \
         python3-pip \
-    && wget "http://ftp.gnu.org/gnu/gdb/gdb-12.1.tar.gz" && tar -xvzf gdb-12.1.tar.gz && cd gdb-12.1 \
+    && wget "http://ftp.gnu.org/gnu/gdb/gdb-12.1.tar.gz" --directory-prefix=/tmp \
+    && tar -xvzf /tmp/gdb-12.1.tar.gz --directory /tmp \
+    && cd /tmp/gdb-12.1 \
     && ./configure --enable-tui --with-python=$(which python3) \
     && make && make install \
     # cyrus-and/gdb-dashboard
     && wget -P ~ https://git.io/.gdbinit && pip install pygments \
     && rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
-# Development dependencies
+# Dependencies
 RUN apt-get update && apt-get install --yes --no-install-recommends \
-        ros-noetic-joint-state-publisher \
     && rm -rf /var/lib/apt/lists/*
 
-# Development utils
+# Utils
 RUN apt-get update && apt-get install --yes --no-install-recommends \
         ripgrep \
         fd-find \
@@ -87,17 +99,9 @@ RUN apt-get update && apt-get install --yes --no-install-recommends \
         jq \
     && rm -rf /var/lib/apt/lists/*
 
-# Config catkin workspace
-WORKDIR /catkin_ws/src
-RUN catkin init --workspace .. \
-    && catkin config --extend /opt/ros/noetic \
-    && catkin config --cmake-args \
-        # Release builds with debugging symbols
-        # -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+# Config workspace
+RUN catkin config --cmake-args \
         # Debug builds with debugging symbols
         -DCMAKE_BUILD_TYPE=Debug \
         # Export compile_commands.json
         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-
-# Config shell
-RUN echo "[ -f /catkin_ws/devel/setup.bash ] && source /catkin_ws/devel/setup.bash" >> ~/.bashrc
