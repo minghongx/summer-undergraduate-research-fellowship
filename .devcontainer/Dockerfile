@@ -63,7 +63,7 @@ RUN catkin init --workspace .. \
     && catkin config --extend /opt/ros/noetic \
     && catkin config --cmake-args \
         # Release builds with debugging symbols
-        -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+        -DCMAKE_BUILD_TYPE=RelWithDebInfo
 RUN echo "[ -f /catkin_ws/devel/setup.bash ] && source /catkin_ws/devel/setup.bash" >> ~/.bashrc
 
 
