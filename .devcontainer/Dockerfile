@@ -3,7 +3,7 @@ FROM ubuntu:focal AS base
 # https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
 # Workaround: https://hub.docker.com/_/debian/
 RUN apt-get update && apt-get install --yes locales && rm -rf /var/lib/apt/lists/* \
-	&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 ENV LANG en_US.utf8
 
 # Workaround: https://askubuntu.com/questions/432604/couldnt-connect-to-accessibility-bus
